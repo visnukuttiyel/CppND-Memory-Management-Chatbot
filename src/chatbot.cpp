@@ -87,8 +87,6 @@ ChatBot &ChatBot ::operator=(ChatBot &&source) // 5 : move assignment operator
     if (this == &source)
         return *this;
     
-    delete _image;
-
     _chatLogic = source._chatLogic;
     _rootNode = source._rootNode;
     _image = source._image;
@@ -148,7 +146,8 @@ void ChatBot::SetCurrentNode(GraphNode *node)
     std::mt19937 generator(int(std::time(0)));
     std::uniform_int_distribution<int> dis(0, answers.size() - 1);
     std::string answer = answers.at(dis(generator));
-
+    _chatLogic->SetChatbotHandle(this);
+  
     // send selected node answer to user
     _chatLogic->SendMessageToUser(answer);
 }
